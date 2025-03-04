@@ -25,7 +25,7 @@ MENU = {
 }
 # water == 300
 resources = {
-    "water": 0,
+    "water": 300,
     "milk": 200,
     "coffee": 100,
     "money": 0.00
@@ -57,7 +57,18 @@ def check_resources(user_drink):
 # Process coins function. 
 #   If sufficient resources, user should be prompted to enter coins and function stores how much money was deposited. 
 def process_coins():
+    total = 0
     num_quarters = int(input("Enter number of quarters."))
+    num_dimes = int(input("Enter number of dimes."))
+    num_nickels = int(input("Enter number of nickels."))
+    num_pennies = int(input("Enter number of pennies."))
+    
+    total += num_quarters * 0.25
+    total += num_dimes * 0.10
+    total += num_nickels * 0.05
+    total += num_pennies * 0.01
+    return total
+
 # Function to validate transaction successful.
 #   Check sufficient money deposited. If not, "Sorry that's not enough money. Money refunded." 
 #   If enough money deposited, this money is added to Report money. 
@@ -69,3 +80,5 @@ def process_coins():
 print_report()
 user_selection = get_input()
 check_resources(user_selection)
+x = process_coins()
+print(x)
