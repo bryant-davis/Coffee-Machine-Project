@@ -37,7 +37,7 @@ def get_input():
         exit()
     if selection == "report":
         print_report()
-        exit()
+        run_program()
     return selection
 
 def print_report():
@@ -46,10 +46,13 @@ def print_report():
 def check_resources(user_drink):
     if MENU[user_drink]["ingredients"]["water"] > resources["water"]:
         print("sorry, not enough water")
+        return False
     elif MENU[user_drink]["ingredients"]["milk"] > resources["milk"]:
         print("sorry, not enough water")
+        return False
     elif MENU[user_drink]["ingredients"]["coffee"] > resources["coffee"]:
         print("sorry, not enough water")
+        return False
     else:
         return True
 
@@ -64,15 +67,16 @@ def process_coins():
     total += num_dimes * 0.10
     total += num_nickels * 0.05
     total += num_pennies * 0.01
+    print(f'Money deposited: {total:.2f}')
     return total
 
 def validate_transaction(money_deposited, user_drink):
     if MENU[user_drink]["cost"] > money_deposited:
         print("Sorry, that's not enough money. Money refunded.")
+        run_program()
     else:
         change_to_dispense = money_deposited - MENU[user_drink]["cost"]
         resources["money"] += (money_deposited - change_to_dispense)
-        print(resources["money"])
 
 def make_coffee(user_drink):
     resources["water"] -= MENU[user_drink]["ingredients"]["water"]
@@ -82,3 +86,12 @@ def make_coffee(user_drink):
     print(resources)
     print(f'Here is your {user_drink}. Enjoy!')
 
+def run_program():
+    user_drink = get_input()
+    if check_resources(user_drink) is True:
+        print(f'Please depost ${MENU[user_drink]["cost"]:.2f}')
+        money_deposited = process_coins()
+        validate_transaction(money_deposited, user_drink)
+        make_coffee(user_drink)
+
+run_program()
