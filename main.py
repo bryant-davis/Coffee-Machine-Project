@@ -33,8 +33,13 @@ resources = {
     "money": 0.00
 }
 
+valid_options = ["espresso", "latte", "cappuccino", "off", "report"]
+
 def get_input():
-    selection = input("What would you like? (espresso/latte/cappuccino):")
+    selection = input("What would you like? (espresso/latte/cappuccino):  ")
+    if selection not in valid_options:
+        print("That is an invalid option, please try again.")
+        run_program()
     if selection == "off":
         exit()
     if selection == "report":
@@ -46,7 +51,6 @@ def print_report():
     print(f'Water: {resources["water"]}ml\nMilk: {resources["milk"]}ml\nCoffee: {resources["coffee"]}g\nMoney: ${resources["money"]}')
 
 def check_resources(user_drink):
-    # TODO add if statement for espressos 
     if MENU[user_drink]["ingredients"]["water"] > resources["water"]:
         print("sorry, not enough water")
         return False
@@ -61,16 +65,16 @@ def check_resources(user_drink):
 
 def process_coins():
     total = 0
-    num_quarters = int(input("Enter number of quarters."))
-    num_dimes = int(input("Enter number of dimes."))
-    num_nickels = int(input("Enter number of nickels."))
-    num_pennies = int(input("Enter number of pennies."))
+    num_quarters = int(input("Enter number of quarters.  "))
+    num_dimes = int(input("Enter number of dimes.  "))
+    num_nickels = int(input("Enter number of nickels.  "))
+    num_pennies = int(input("Enter number of pennies.  "))
     
     total += num_quarters * 0.25
     total += num_dimes * 0.10
     total += num_nickels * 0.05
     total += num_pennies * 0.01
-    print(f'Money deposited: {total:.2f}')
+    print(f'Money deposited: ${total:.2f}')
     return total
 
 def validate_transaction(money_deposited, user_drink):
