@@ -1,3 +1,5 @@
+# TODO: Add try catch for error handling
+
 MENU = {
     "espresso": {
         "ingredients": {
@@ -44,13 +46,14 @@ def print_report():
     print(f'Water: {resources["water"]}ml\nMilk: {resources["milk"]}ml\nCoffee: {resources["coffee"]}g\nMoney: ${resources["money"]}')
 
 def check_resources(user_drink):
+    # TODO add if statement for espressos 
     if MENU[user_drink]["ingredients"]["water"] > resources["water"]:
         print("sorry, not enough water")
         return False
-    elif MENU[user_drink]["ingredients"]["milk"] > resources["milk"]:
+    elif MENU[user_drink]["ingredients"]["coffee"] > resources["coffee"]:
         print("sorry, not enough water")
         return False
-    elif MENU[user_drink]["ingredients"]["coffee"] > resources["coffee"]:
+    elif user_drink != "espresso" and MENU[user_drink]["ingredients"]["milk"] > resources["milk"]:
         print("sorry, not enough water")
         return False
     else:
@@ -77,13 +80,13 @@ def validate_transaction(money_deposited, user_drink):
     else:
         change_to_dispense = money_deposited - MENU[user_drink]["cost"]
         resources["money"] += (money_deposited - change_to_dispense)
+        print(f'Change returned: ${change_to_dispense:.2f}')
 
 def make_coffee(user_drink):
     resources["water"] -= MENU[user_drink]["ingredients"]["water"]
     resources["coffee"] -= MENU[user_drink]["ingredients"]["coffee"]
     if user_drink != "espresso":
         resources["milk"] -= MENU[user_drink]["ingredients"]["milk"]
-    print(resources)
     print(f'Here is your {user_drink}. Enjoy!')
 
 def run_program():
